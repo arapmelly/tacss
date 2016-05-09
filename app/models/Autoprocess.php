@@ -12,15 +12,10 @@ class Autoprocess extends \Eloquent {
 
 
 
-	public static function record($date, $category, $product){
+	public static function record($period, $category, $product){
 
 
-		$dt = explode('-', $date);
-
-		$year = $dt[0];
-		$month = $dt[1];
-
-		$period = $month."-".$year;
+		
 
 
 		$autoprocess = new Autoprocess;
@@ -36,15 +31,10 @@ class Autoprocess extends \Eloquent {
 
 
 
-	public static function checkProcessed($date, $category, $product){
+	public static function checkProcessed($period, $category, $product){
 
 
-		$dt = explode('-', $date);
-
-		$year = $dt[0];
-		$month = $dt[1];
-
-		$period = $month."-".$year;
+		
 
 		$processed = DB::table('autoprocesses')->where('period', '=', $period)->where('product_id', '=', $product->id)->where('category', '=', $category)->where('is_completed', '=', true)->first();
 

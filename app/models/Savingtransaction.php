@@ -328,18 +328,38 @@ class Savingtransaction extends \Eloquent {
 
 
 
+	
+
+
+
 	public static function trasactionExists($date, $savingaccount){
 
-		$count = DB::table('savingtransactions')->where('date', '=', $date)->where('savingaccount_id', '=', $savingaccount->id)->count();
 
-		if($count >= 1){
+		$dt = explode('-', $date);
+		$mnth = $dt[1];
 
-			return true;
-		} else {
+		$dates = DB::table('loantransactions')->where('loanaccount_id', '=', $savingaccount->id)->get();
 
-			return false;
+		foreach ($dates as $date) {
+
+			$dat = explode('-', $date->date);
+			$month = $dat[1];
+			
+			if($mnth == $month){
+
+				return true;
+			} else {
+
+				return false;
+			}
+
 		}
+
+		
 	}
+
+
+
 
 
 

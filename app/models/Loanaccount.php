@@ -211,7 +211,7 @@ class Loanaccount extends \Eloquent {
 
 		$time = $loanaccount->repayment_duration;
 
-		$formula = $loanaccount->loanproduct->formula;
+		$formula = DB::table('loanproducts')->where('id', '=', $loanaccount->loanproduct_id)->pluck('formula');
 
 		if($formula == 'SL'){
 

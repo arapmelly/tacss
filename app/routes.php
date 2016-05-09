@@ -175,6 +175,47 @@ Route::get('automated/loans', function(){
     return View::make('autoloans', compact('loanproducts'));
 });
 
+
+Route::post('automated/autoloans', function(){
+
+    $data = Input::all();
+
+    $period = array_get($data, 'period');
+    $loanproductid = array_get($data, 'loanproduct_id');
+
+    $loanproduct = Loanproduct::findOrFail($loanproductid);
+
+    //check if loan has been processed
+
+
+
+    if(Autoprocess::checkProcessed($period, 'loan', $loanproduct)){
+
+        return Redirect::back()->with('notice', 'This period has already been processed');
+    }
+
+    
+
+   
+
+    $pr = explode('-', $period);
+    $month = $pr[0];
+    $year = $pr[1];
+    $day = '21';
+
+    $date = $year.'-'.$month.'-'.$day;
+
+    $loanaccounts = DB::table('loanaccounts')->where('loanproduct_id', '=', $loanproductid)->get();
+
+    return View::make('autoloan', compact('loanaccounts', 'date', 'period', 'loanproductid'));
+
+});
+
+
+
+
+
+
 Route::get('automated/savings', function(){
 
     
@@ -182,6 +223,147 @@ Route::get('automated/savings', function(){
 
     return View::make('automated', compact('savingproducts'));
 });
+
+
+
+Route::post('automated/savin', function(){
+
+    $data = Input::all();
+
+    $period = array_get($data, 'period');
+
+    $savingproductid = Input::get('savingproduct');
+
+    $savingproduct = Savingproduct::findOrFail(Input::get('savingproduct'));
+    //check if loan has been processed
+
+
+
+    if(Autoprocess::checkProcessed($period, 'saving', $savingproduct)){
+
+        return Redirect::back()->with('notice', 'This period has already been processed');
+    }
+
+
+
+    $pr = explode('-', $period);
+    $month = $pr[0];
+    $year = $pr[1];
+    $day = '21';
+
+    $date = $year.'-'.$month.'-'.$day;
+
+    $members = Member::all();
+
+    
+
+
+    return View::make('savin', compact('members', 'date', 'period', 'savingproductid'));
+
+
+});
+
+
+Route::post('automated/savins', function(){
+
+    $savingproduct = Savingproduct::findOrFail(Input::get('savingproduct_id'));
+
+    $period = Input::get('period');
+
+    $members = Input::get('member');
+    $dates = Input::get('date');
+    $amounts = Input::get('amount');
+
+    
+   $i=0;
+
+    foreach($members as $member){
+
+      
+       
+        $date = $dates[$i];
+        $amount = $amounts[$i];
+
+        $savingaccount = Member::getMemberAccount($member);
+        $type = 'credit';
+        $description = 'savings deposit';
+        $transacted_by = Confide::user()->username;
+
+        if(Savingtransaction::trasactionExists($date,$savingaccount) == false){
+
+             Savingtransaction::transact($date, $savingaccount, $amount, $type, $description, $transacted_by);
+
+        }
+       
+
+        $i++;
+
+
+    }
+
+    
+
+    Autoprocess::record($period, 'saving', $savingproduct);
+
+   return Redirect::to('automated/savings')->with('notice', 'saving transactions have been successfully saved');
+
+
+
+});
+
+
+
+
+
+Route::post('automated/autoloan', function(){
+
+
+
+    $period = Input::get('period');
+
+    $loanaccounts = Input::get('account');
+    $dates = Input::get('date');
+    $amounts = Input::get('amount');
+
+    $loanproduct = Loanproduct::findOrFail(Input::get('loanproduct_id'));
+   $i=0;
+
+    foreach($loanaccounts as $loanaccount){
+
+      
+       
+        $date = $dates[$i];
+        $amount = $amounts[$i];
+
+        $data = array('loanaccount_id' => $loanaccount, 'date' => $date, 'amount' => $amount );
+
+        if(Loantransaction::trasactionExists($date,$loanaccount) == false){
+            
+            Loanrepayment::repayLoan($data);
+
+        }
+       
+
+        $i++;
+
+
+    }
+
+    
+
+   Autoprocess::record($period, 'loan', $loanproduct);
+
+   return Redirect::to('automated/loans')->with('notice', 'loan repayment transactions have been successfully processed');
+
+
+
+});
+
+
+
+
+
+
 
 
 
@@ -997,6 +1179,8 @@ Route::post('import/loans', function(){
 
 
 });
+
+
 
 
 

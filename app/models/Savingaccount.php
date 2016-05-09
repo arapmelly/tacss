@@ -85,6 +85,34 @@ class Savingaccount extends \Eloquent {
 
 
 
+
+
+	public static function getPeriodAmount($member){
+
+
+		foreach($member->savingaccounts as $savingaccount){
+
+
+			$saving = DB::table('savingtransactions')->where('savingaccount_id', '=', $savingaccount->id)->where('type', '=', 'credit')->OrderBy('date',  'desc')->pluck('amount');
+
+			
+		if($saving){
+			return $saving;
+		}
+		else {
+			return 0;
+		}
+
+
+		}
+
+		
+			
+
+	}
+
+
+
 	
 
 

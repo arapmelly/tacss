@@ -49,6 +49,11 @@
     $('#users').DataTable({
         aaSorting: [] 
     });
+
+    $('#auto').DataTable({
+        aaSorting: [],
+        paging: false 
+    });
     $('#mobile').DataTable();
     $('#rejected').DataTable();
     $('#app').DataTable();
@@ -74,6 +79,9 @@ $('.datepicker').datepicker({
 });
 
 </script>
+
+
+
 
 
 <script type="text/javascript">

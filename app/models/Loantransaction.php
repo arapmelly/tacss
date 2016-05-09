@@ -248,5 +248,33 @@ class Loantransaction extends \Eloquent {
 
 
 
+	public static function trasactionExists($date, $loanaccount){
+
+
+		$dt = explode('-', $date);
+		$mnth = $dt[1];
+
+		$dates = DB::table('loantransactions')->where('loanaccount_id', '=', $loanaccount)->get();
+
+		foreach ($dates as $date) {
+
+			$dat = explode('-', $date->date);
+			$month = $dat[1];
+			
+			if($mnth == $month){
+
+				return true;
+			} else {
+
+				return false;
+			}
+
+		}
+
+		
+	}
+
+
+
 
 }

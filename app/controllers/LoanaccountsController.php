@@ -124,7 +124,7 @@ public function shopapplication()
 		$interest_paid = Loanrepayment::getInterestPaid($loanaccount);
 		$loanguarantors = $loanaccount->guarantors;
 
-		$loantransactions = DB::table('loantransactions')->where('loanaccount_id', '=', $id)->orderBy('id', 'DESC')->get();
+		$loantransactions = DB::table('loantransactions')->where('loanaccount_id', '=', $id)->orderBy('date', 'ASC')->get();
 		
 		return View::make('loanaccounts.show', compact('loanaccount', 'loanguarantors', 'interest', 'principal_paid', 'interest_paid', 'loanbalance', 'loantransactions'));
 	}
