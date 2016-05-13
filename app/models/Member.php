@@ -63,4 +63,10 @@ class Member extends \Eloquent {
 
 		return $account;
 	}
+	public static function getMemberName($id){
+		$member_id = DB::table('loanaccounts')->where('id', '=', $id)->pluck('member_id');
+		$member = Member::find($member_id);
+		
+		return $member->name;
+	}
 }

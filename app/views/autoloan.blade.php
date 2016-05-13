@@ -52,7 +52,7 @@
             @if(Loantransaction::getLoanBalance($loanaccount) > 10)
                 <tr>
 
-                    <td>{{$loanaccount->id}}
+                    <td>{{Member::getMemberName($loanaccount->id)}}
                        
                     </td>
                     <td>
