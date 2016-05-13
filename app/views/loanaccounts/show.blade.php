@@ -307,7 +307,7 @@ function asMoney($value) {
 
             <?php 
 
-                $date = date("d-M-Y", strtotime($loanaccount->repayment_start_date));
+                $date = date("d-M-Y", strtotime($loanaccount->date_disbursed. ' + 30 days'));
 
                 $interest = Loanaccount::getInterestAmount($loanaccount);
 

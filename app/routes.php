@@ -10,6 +10,17 @@
 |
 */
 
+Route::get('date', function(){
+
+    $period = 360;
+
+        $end_period = date('Y-m-d', strtotime('2015-10-01'. ' + '.$period.' days'));
+
+
+        echo $end_period;
+
+});
+
 
 Route::get('/', function()
 {

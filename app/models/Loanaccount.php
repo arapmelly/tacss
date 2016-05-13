@@ -410,5 +410,34 @@ class Loanaccount extends \Eloquent {
 
 		return $amount;
 	}
+
+
+
+	public static function isWithinPeriod($loanaccount, $repayment_period){
+
+
+		$period = $loanaccount->repayment_duration * 30;
+
+		
+		$date_disbursed= $loanaccount->date_disbursed;
+		
+
+		
+
+		$start_period = date('Y-m-d', strtotime($date_disbursed. ' + 30 days'));
+
+		$end_period = date('Y-m-d', strtotime($date_disbursed. ' + '.$period.' days'));
+
+		$repayment_period = date('Y-m-d', strtotime($repayment_period));
+		
+		if(($repayment_period > $start_period) && ($repayment_period < $end_period)){
+
+			return true;
+		} else {
+
+			return false;
+		}
+  
+	}
 	
 }
