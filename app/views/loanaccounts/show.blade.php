@@ -71,6 +71,16 @@ function asMoney($value) {
 
 
 	</tr>
+
+  <tr>
+
+    <td>Amount Disbursed</td><td>{{ $loanaccount->amount_disbursed}}</td>
+
+
+  </tr>
+
+
+
 	
 
   @if($loanaccount->is_top_up)
@@ -115,7 +125,7 @@ function asMoney($value) {
 
 <tr>
 
-    <td>Amount Disbursed</td><td>{{ asMoney($loanaccount->amount_disbursed)}}</td>
+    <td>Loan Amount</td><td>{{ asMoney(Loanaccount::getLoanAmount($loanaccount))}}</td>
 
 
   </tr>
