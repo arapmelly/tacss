@@ -338,7 +338,7 @@ class Savingtransaction extends \Eloquent {
 		$dt = explode('-', $date);
 		$mnth = $dt[1];
 
-		$dates = DB::table('loantransactions')->where('loanaccount_id', '=', $savingaccount->id)->get();
+		$dates = DB::table('savingtransactions')->where('savingaccount_id', '=', $savingaccount->id)->get();
 
 		foreach ($dates as $date) {
 
@@ -348,10 +348,7 @@ class Savingtransaction extends \Eloquent {
 			if($mnth == $month){
 
 				return true;
-			} else {
-
-				return false;
-			}
+			} 
 
 		}
 

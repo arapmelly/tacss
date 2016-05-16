@@ -300,7 +300,7 @@ Route::post('automated/savins', function(){
         $description = 'savings deposit';
         $transacted_by = Confide::user()->username;
 
-        if(Savingtransaction::trasactionExists($date,$savingaccount) == false){
+        if(!Savingtransaction::trasactionExists($date,$savingaccount)){
 
              Savingtransaction::transact($date, $savingaccount, $amount, $type, $description, $transacted_by);
 
