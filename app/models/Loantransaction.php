@@ -44,6 +44,26 @@ class Loantransaction extends \Eloquent {
 	}
 
 
+	public static function getLoanBalanceTacsix($loanaccount){
+
+	
+
+
+		
+
+		$payments = DB::table('loantransactions')->where('loanaccount_id', '=', $loanaccount->id)->where('type', '=', 'credit')->sum('amount');
+
+		
+		$loanamount = Loanaccount::getLoanAmountTacsix($loanaccount);
+		$balance = $loanamount - $payments;
+		return $balance;
+		
+
+
+	}
+
+
+
 	public static function getRemainingPeriod($loanaccount){
 
 		$paid_periods = DB::table('loantransactions')->where('loanaccount_id', '=', $loanaccount->id)->where('description', '=', 'loan repayment')->count();
@@ -52,6 +72,86 @@ class Loantransaction extends \Eloquent {
 
 		return $remaining_period;
 	}
+
+
+	public static function getPrincipalDueTacsix($loanaccount){
+
+		$principal = $loanaccount->amount_disbursed;
+		$time = $loanaccount->repayment_duration;
+
+		$amount = $principal / $time;
+
+		return $amount;
+
+
+	}
+
+
+	public static function getInterestDueTacsix($loanaccount){
+
+		$interest = Loanaccount::getInterestAmountTacsix($loanaccount);
+		$time = $loanaccount->repayment_duration;
+
+		$amount = $interest / $time;
+
+		return $amount;
+
+
+	}
+
+
+	public static function getDurationDueTacsix($loanaccount){
+
+		$principal_due = getPrincipalDueTacsix($loanaccount);
+		$interest_due = getInterestDueTacsix($loanaccount);
+
+		$amount = $principal_due + $interest_due;
+
+		return $amount;
+
+
+	}
+
+
+	public static function getRepaymentsMade($loanaccount){
+
+		$repayments = DB::table('loantransactions')->where('loanaccount_id', '=', $loanaccount->id)->where('type', '=', 'credit')->count();
+
+		return $repayments;
+	}
+
+
+	public static function getPrincipalBalanceTacsix($loanaccount){
+
+		$principal_due = Loantransaction::getPrincipalDueTacsix($loanaccount);
+
+		$repayments_made = Loantransaction::getRepaymentsMade($loanaccount);
+
+		$principal_paid = $principal_due * $repayments_made;
+
+		$principal = $loanaccount->amount_disbursed;
+
+		$balance = $principal - $principal_paid;
+
+		return $balance;
+	}
+
+
+	public static function getOffsetAmount($loanaccount){
+
+	
+
+		$principal_balance = Loantransaction::getPrincipalBalanceTacsix($loanaccount);
+
+		$interest_due = $principal_balance * ($loanaccount->interest_rate/100);
+
+		$offsetamount = $principal_balance + $interest_due;
+
+		return $offsetamount;
+	}
+
+
+
 
 
 	public static function getPrincipalDue($loanaccount){

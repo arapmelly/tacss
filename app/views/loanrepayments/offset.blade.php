@@ -51,7 +51,7 @@ function asMoney($value) {
 
         <tr>
 
-          <td>Principal Balance</td><td>{{ asMoney(Loanaccount::getPrincipalBal($loanaccount)) }}</td>
+          <td>Principal Balance</td><td>{{ asMoney(Loantransaction::getPrincipalBalanceTacsix($loanaccount)) }}</td>
         </tr>
 
        
@@ -68,21 +68,11 @@ function asMoney($value) {
        <table class="table table-condensed table-bordered">
 
 
-        <tr>
-
-          <td>Principal Due</td><td>{{ asMoney($principal_due) }}</td>
-
-        </tr>
-        
-        <tr>
-
-          <td>Interest Due</td><td>{{ asMoney($interest_due) }}</td>
-        </tr>
 
 
-       
+       <tr>
 
-          <td>Total Due</td><td>{{ asMoney($principal_due + $interest_due)}}</td>
+          <td>Offset Amount</td><td>{{ asMoney(Loantransaction::getOffsetAmount($loanaccount))}}</td>
         </tr>
         </table>
 
@@ -96,7 +86,7 @@ function asMoney($value) {
 
         <div class="form-group">
             <label for="username">Offset Amount</label>
-            <input class="form-control" placeholder="" type="text" name="amount" id="amount" value="{{$principal_due + $interest_due}}">
+            <input class="form-control" placeholder="" type="text" name="amount" id="amount" value="{{ round(Loantransaction::getOffsetAmount($loanaccount),2) }}">
         </div>
 
 

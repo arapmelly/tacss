@@ -48,12 +48,12 @@ function asMoney($value) {
 
         <tr>
 
-          <td>Loan Amount</td><td>{{ asMoney($loanaccount->amount_disbursed + $interest) }}</td>
+          <td>Loan Amount</td><td>{{ asMoney(Loanaccount::getLoanAmountTacsix($loanaccount)) }}</td>
         </tr>
 
         <tr>
 
-          <td>Loan Balance</td><td>{{ asMoney($loanbalance) }}</td>
+          <td>Loan Balance</td><td>{{ asMoney(Loantransaction::getLoanBalanceTacsix($loanaccount)) }}</td>
         </tr>
        
 
@@ -70,18 +70,18 @@ function asMoney($value) {
 
         <tr>
 
-          <td>Principal Due</td><td>{{ asMoney($principal_due) }}</td>
+          <td>Principal Due</td><td>{{ asMoney(Loantransaction::getPrincipalDueTacsix($loanaccount)) }}</td>
         </tr>
         
         <tr>
 
-          <td>Interest Due</td><td>{{ asMoney($interest_due) }}</td>
+          <td>Interest Due</td><td>{{ asMoney(Loantransaction::getInterestDueTacsix($loanaccount)) }}</td>
         </tr>
 
 
        
 
-          <td>Duration Due</td><td>{{ asMoney(Loanaccount::getTotalDue($loanaccount))}}</td>
+          <td>Duration Due</td><td>{{ asMoney(  Loantransaction::getInterestDueTacsix($loanaccount) +  Loantransaction::getPrincipalDueTacsix($loanaccount)    ) }}</td>
         </tr>
         </table>
 

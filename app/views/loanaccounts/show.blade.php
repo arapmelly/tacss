@@ -34,14 +34,16 @@ function asMoney($value) {
 
 <div class="col-lg-5 pull-right">
 
+@if(!Loanaccount::isMatured($loanaccount))
  <a  class="btn btn-success btn-sm" href="{{ URL::to('loanrepayments/create/'.$loanaccount->id) }}"> <span class="glyphicon glyphicon-file" aria-hidden="true"></span> Repay Loan</a>
  <a  class="btn btn-success btn-sm" href="{{ URL::to('loanrepayments/offset/'.$loanaccount->id) }}"> <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Offset Loan</a>
-
+@endif
 <!--
  <a  class="btn btn-success btn-sm" href="{{ URL::to('loanaccounts/reschedule/'.$loanaccount->id) }}"> <span class="glyphicon glyphicon-random" aria-hidden="true"></span>  Reschedule Loan</a>
 -->
+<!--
  <a  class="btn btn-success btn-sm" href="{{ URL::to('loanaccounts/topup/'.$loanaccount->id) }}"> <span class="glyphicon glyphicon-download" aria-hidden="true"></span> Top up Loan</a>
-
+-->
 </div>
 
 </div>
@@ -125,14 +127,14 @@ function asMoney($value) {
 
 <tr>
 
-    <td>Loan Amount</td><td>{{ asMoney(Loanaccount::getLoanAmount($loanaccount))}}</td>
+    <td>Loan Amount</td><td>{{ asMoney(Loanaccount::getLoanAmountTacsix($loanaccount))}}</td>
 
 
   </tr>
 
   <tr>
 
-    <td>Loan Balance</td><td>{{ asMoney(Loantransaction::getLoanBalance($loanaccount))}}</td>
+    <td>Loan Balance</td><td>{{ asMoney(Loantransaction::getLoanBalanceTacsix($loanaccount))}}</td>
 
 
   </tr>
@@ -282,9 +284,9 @@ function asMoney($value) {
 
                 {{ $date }}</td>
               <td>{{ asMoney($loanaccount->amount_disbursed + $loanaccount->top_up_amount)}}</td>
-              <td>{{ asMoney(Loanaccount::getInterestAmount($loanaccount))}}</td>
-              <td>{{ asMoney(Loanaccount::getLoanAmount($loanaccount))  }}</td>
-              <td>{{ asMoney(Loanaccount::getLoanAmount($loanaccount))  }}</td>
+              <td>{{ asMoney(Loanaccount::getInterestAmountTacsix($loanaccount))}}</td>
+              <td>{{ asMoney(Loanaccount::getLoanAmountTacsix($loanaccount))  }}</td>
+              <td>{{ asMoney(Loanaccount::getLoanAmountTacsix($loanaccount))  }}</td>
               <td>{{ asMoney(0)  }}</td>
             </tr>
 
@@ -293,13 +295,13 @@ function asMoney($value) {
 
                 $date = date("d-M-Y", strtotime($loanaccount->date_disbursed. ' + 30 days'));
 
-                $interest = Loanaccount::getInterestAmount($loanaccount);
+                $interest = Loanaccount::getInterestAmountTacsix($loanaccount);
 
                 
                 
                 $principal = $loanaccount->amount_disbursed + $loanaccount->top_up_amount;
                 
-                $balance = Loanaccount::getLoanAmount($loanaccount);
+                $balance = Loanaccount::getLoanAmountTacsix($loanaccount);
                 $days = 30;
                 $totalint =0;
 

@@ -201,6 +201,30 @@ class Loanaccount extends \Eloquent {
 	}
 
 
+	public static function getLoanAmountTacsix($loanaccount){
+
+		$principal = $loanaccount->amount_disbursed;
+		$rate = $loanaccount->interest_rate/100;
+		$time = $loanaccount->repayment_duration;
+
+		$interest = $principal * $rate * $time;
+		$amount = $principal + $interest;
+
+		return $amount;
+	}
+
+	public static function getInterestAmountTacsix($loanaccount){
+
+		$principal = $loanaccount->amount_disbursed;
+		$rate = $loanaccount->interest_rate/100;
+		$time = $loanaccount->repayment_duration;
+
+		$interest = $principal * $rate * $time;
+		
+		return $interest;
+	}
+
+
 
 	public static function getInterestAmount($loanaccount){
 
@@ -438,6 +462,17 @@ class Loanaccount extends \Eloquent {
 			return false;
 		}
   
+	}
+
+
+	public static function isMatured($loanaccount){
+
+	
+		$loanbalance = Loantransaction::getLoanBalanceTacsix($loanaccount);
+
+		if($loanbalance <= 5){
+			return true;
+		}
 	}
 	
 }
