@@ -1192,6 +1192,26 @@ Route::post('import/loans', function(){
 });
 
 
+Route::get('rollover/status', function(){
+
+    return View::make('rollover');
+});
+
+
+Route::post('rollover/getstatus', function(){
+
+    $year = Input::get('year');
+
+    $months = array('JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC');
+    $monthdigits = array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12');
+    
+    $savingproducts = Savingproduct::all();
+    $loanproducts = Loanproduct::all();
+
+    return View::make('status', compact('year', 'savingproducts', 'loanproducts', 'months', 'monthdigits'));
+});
+
+
 
 
 

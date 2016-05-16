@@ -95,5 +95,16 @@ $('.datepicker2').datepicker({
 });
 </script>
 
+<script type="text/javascript">
+$(function(){
+$('.datepicker7').datepicker({
+    format: "yyyy",
+    startView: "years", 
+    minViewMode: "years",
+    autoclose: true
+});
+});
+</script>
+
 
 </head>
