@@ -71,12 +71,7 @@ function asMoney($value) {
 
 
 	</tr>
-	<tr>
-
-		<td>Amount Disbursed</td><td>{{ asMoney($loanaccount->amount_disbursed)}}</td>
-
-
-	</tr>
+	
 
   @if($loanaccount->is_top_up)
   <tr>
@@ -118,37 +113,21 @@ function asMoney($value) {
 
 <table class="table table-bordered table-hover">
 
+<tr>
 
-
-	<tr>
-
-		<td>Principal Paid</td><td>{{ asMoney($principal_paid)}}</td>
-
-
-	</tr>
-
-	<tr>
-
-		<td>Interest Paid</td><td>{{ asMoney($interest_paid)}}</td>
-
-
-	</tr>
-
-<!--
-  <tr>
-
-    <td>Loan Balance </td><td>{{ asMoney($loanbalance)}}</td>
+    <td>Amount Disbursed</td><td>{{ asMoney($loanaccount->amount_disbursed)}}</td>
 
 
   </tr>
--->
 
-	<tr>
+  <tr>
 
-		<td>Principal Balance </td><td>{{ asMoney(Loanaccount::getPrincipalBal($loanaccount))}}</td>
+    <td>Loan Balance</td><td>{{ asMoney(Loantransaction::getLoanBalance($loanaccount))}}</td>
 
 
-	</tr>
+  </tr>
+
+	
   <!--
 	<tr>
 
@@ -176,12 +155,7 @@ function asMoney($value) {
 
 
 
-  <tr>
-
-    <td>Loan Period</td><td>{{ $loanaccount->period." months"}}</td>
-
-
-  </tr>
+  
 
   <tr>
 

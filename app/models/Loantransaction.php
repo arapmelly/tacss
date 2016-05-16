@@ -35,7 +35,7 @@ class Loantransaction extends \Eloquent {
 		$payments = DB::table('loantransactions')->where('loanaccount_id', '=', $loanaccount->id)->where('type', '=', 'credit')->sum('amount');
 
 		
-		$loanamount = Loanaccount::getLoanAmount($loanaccount);
+		$loanamount = $loanaccount->amount_disbursed;
 		$balance = $loanamount - $payments;
 		return $balance;
 		
