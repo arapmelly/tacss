@@ -348,7 +348,7 @@ Route::post('automated/autoloan', function(){
 
         $data = array('loanaccount_id' => $loanaccount, 'date' => $date, 'amount' => $amount );
 
-        if(Loantransaction::trasactionExists($date,$loanaccount) == false){
+        if(!Loantransaction::trasactionExists($date,$loanaccount)){
             
             Loanrepayment::repayLoan($data);
 

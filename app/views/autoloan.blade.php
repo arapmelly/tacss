@@ -51,6 +51,7 @@
             @foreach($loanaccounts as $loanaccount)
             @if(Loantransaction::getLoanBalance($loanaccount) > 10)
             @if(Loanaccount::isWithinPeriod($loanaccount, $date))
+            
                 <tr>
 
                     <td>{{Member::getMemberName($loanaccount->id)}}
@@ -72,6 +73,7 @@
                     </td>
 
                 </tr>
+             
                 @endif
                 @endif
             @endforeach

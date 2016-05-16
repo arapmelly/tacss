@@ -264,10 +264,7 @@ class Loantransaction extends \Eloquent {
 			if($mnth == $month){
 
 				return true;
-			} else {
-
-				return false;
-			}
+			} 
 
 		}
 
