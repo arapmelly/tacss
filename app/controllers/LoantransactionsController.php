@@ -149,4 +149,12 @@ class LoantransactionsController extends \BaseController {
 	}
 
 
+	public function void($id)
+	{
+		Loantransaction::destroy($id);
+
+		return Redirect::back()->with('notice', 'loantransaction has been voided');
+	}
+
+
 }

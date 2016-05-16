@@ -483,6 +483,7 @@ function asMoney($value) {
            <th>Dr</th>
            <!-- <th>Balance</th> -->
         <th></th>
+         <th></th>
 
       </thead>
       <tbody>
@@ -515,6 +516,8 @@ function asMoney($value) {
 -->
 
           </td> 
+
+          <td></td>
 
 
          </tr>
@@ -567,6 +570,10 @@ function asMoney($value) {
 
           </td>
         -->
+        <td>
+          
+          <a href="{{URL::to('loantransactions/void/'.$transaction->id)}}" onclick="return (confirm('Are you sure you want to void this transaction?'))">void</a>
+        </td>
 
          <td>
 

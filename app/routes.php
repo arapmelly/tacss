@@ -1212,6 +1212,9 @@ Route::post('rollover/getstatus', function(){
 });
 
 
+Route::get('loantransactions/void/{id}', 'LoantransactionsController@void');
+
+
 
 
 
